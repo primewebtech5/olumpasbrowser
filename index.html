@@ -1,0 +1,882 @@
+ 
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>OLUMPAS</title>
+
+<link rel="icon" type="image/png" href="image.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#ffffff;
+font-family:Arial;
+animation:pageReveal 1s ease;
+}
+
+/* PAGE REVEAL */
+
+@keyframes pageReveal{
+from{
+opacity:0;
+transform:scale(1.05);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:radial-gradient(circle,#111,#000);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+color:white;
+font-family:'Orbitron';
+transition:opacity 1s ease;
+}
+
+.loader-text{
+font-size:80px;
+letter-spacing:10px;
+}
+
+.load-bar{
+width:320px;
+height:5px;
+background:#222;
+margin-top:40px;
+overflow:hidden;
+border-radius:20px;
+}
+
+.load-move{
+height:100%;
+width:120px;
+background:linear-gradient(90deg,transparent,red,white,red,transparent);
+animation:loadMove 1.5s linear infinite;
+}
+
+@keyframes loadMove{
+0%{transform:translateX(-120px);}
+100%{transform:translateX(320px);}
+}
+
+/* RED HEADER */
+
+.red-header{
+background:linear-gradient(to right,#ff0000,#990000);
+height:80px;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:flex-end;
+padding-right:40px;
+gap:15px;
+position:fixed;
+top:0;
+left:0;
+z-index:1000;
+}
+
+.header-logo{
+height:45px;
+width:45px;
+border-radius:50%;
+border:2px solid white;
+}
+
+.logo-text{
+color:white;
+font-family:'Orbitron';
+font-weight:900;
+font-size:32px;
+letter-spacing:4px;
+}
+
+/* BLACK HEADER */
+
+.black-header{
+background:black;
+height:40px;
+width:100%;
+display:flex;
+align-items:center;
+overflow:hidden;
+position:fixed;
+top:80px;
+left:0;
+}
+
+.scroll-text{
+color:white;
+white-space:nowrap;
+font-family:'Montserrat';
+letter-spacing:3px;
+animation:scroll 15s linear infinite;
+}
+
+@keyframes scroll{
+from{transform:translateX(-100%)}
+to{transform:translateX(100%)}
+}
+
+/* CENTER TITLE */
+
+.content{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:180px;
+}
+
+.middle-title{
+font-family:'Orbitron';
+font-size:70px;
+letter-spacing:8px;
+font-weight:900;
+}
+
+/* FLOW LINE */
+
+.flow-line{
+width:340px;
+height:4px;
+background:#e5e5e5;
+margin-top:14px;
+position:relative;
+overflow:hidden;
+border-radius:10px;
+}
+
+.line{
+position:absolute;
+height:100%;
+width:120px;
+background:linear-gradient(90deg,transparent,black,transparent);
+animation:loading 1.4s linear infinite;
+}
+
+@keyframes loading{
+0%{left:-120px;}
+100%{left:340px;}
+}
+
+/* BLACK SECTIONS */
+
+.black-section{
+background:linear-gradient(to right,#111,#000);
+height:30vh;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:60px;
+}
+
+.first-black{
+margin-top:100px;
+}
+
+.footer-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:15px;
+width:200px;
+}
+
+.footer-logo{
+height:100px;
+width:100px;
+border-radius:50%;
+border:3px solid white;
+transition:0.4s;
+}
+
+.footer-logo:hover{
+transform:scale(1.1);
+}
+
+.footer-text{
+color:white;
+font-family:'Montserrat';
+letter-spacing:3px;
+text-align:center;
+}
+
+.divider{
+width:3px;
+height:120px;
+background:white;
+}
+
+/* TEXT SECTION */
+
+.text-section{
+background:white;
+padding:70px 80px;
+text-align:center;
+}
+
+.text-title{
+font-family:'Orbitron';
+font-size:34px;
+letter-spacing:4px;
+margin-bottom:25px;
+}
+
+.text-para{
+font-family:'Montserrat';
+font-size:18px;
+line-height:1.8;
+color:#333;
+max-width:900px;
+margin:auto;
+}
+
+/* TEXT SLIDER */
+.text-slider{ 
+    width:100%; 
+    height:220px; 
+    overflow:hidden; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    background:white; 
+} 
+
+.text-slides{ 
+    display:flex; 
+    width:300%;
+    animation:textSlide 9s infinite;
+} 
+
+.text-box{ 
+    width:100%; 
+    flex-shrink:0;
+    text-align:center; 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+} 
+
+.text-box h2{ 
+    font-family:'Orbitron'; 
+    font-size:50px; 
+    letter-spacing:5px; 
+    margin-bottom:10px; 
+}
+
+.text-box p{ 
+    font-family:'Montserrat'; 
+    font-size:20px;
+    max-width:700px; 
+    margin:auto; 
+    line-height:1.6; 
+}
+
+/* PERFECT SMOOTH */
+
+@keyframes textSlide{ 
+
+    0%, 20%{
+        transform:translateX(0%);
+    }
+
+    25%, 45%{
+        transform:translateX(-100%);
+    }
+
+    50%, 70%{
+        transform:translateX(-200%);
+    }
+
+    75%,100%{
+        transform:translateX(0%);
+    }
+}
+/* SLIDER */
+
+.slider{
+width:100%;
+height:450px;
+overflow:hidden;
+background:black;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.slides{
+display:flex;
+width:300%;
+height:100%;
+animation:slideMove 9s infinite;
+}
+
+.slides img{
+width:100%;
+height:100%;
+object-fit:contain;   /* 🔥 MAIN FIX */
+flex-shrink:0;
+background:black;     /* side gap black dekhase */
+}
+
+/* SMOOTH LOOP */
+
+@keyframes slideMove{
+
+0%,20%{
+    transform:translateX(0%);
+}
+
+25%,45%{
+    transform:translateX(-100%);
+}
+
+50%,70%{
+    transform:translateX(-200%);
+}
+
+75%,100%{
+    transform:translateX(0%);
+}
+
+}
+/* ORGANIZATION SECTION */
+
+.org-section{ padding:80px 40px; background:#f5f5f5; text-align:center; } 
+.org-title{ font-family:'Orbitron'; font-size:40px; letter-spacing:6px; margin:20px;} 
+.org-line{ width:3px; height:50px; background:black; margin:auto; }
+
+.org-line{
+width:3px;
+height:50px;
+background:black;
+margin:auto;
+}
+
+.org-row{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:40px;
+flex-wrap:wrap;
+}
+
+.org-box{
+width:300px;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.15);
+}
+
+.org-box h3{
+font-family:'Orbitron';
+letter-spacing:3px;
+margin-bottom:10px;
+}
+
+.org-box p{
+font-family:'Montserrat';
+line-height:1.6;
+color:#444;
+}
+
+/* ORG BUTTON STYLE */
+
+.org-btn{
+width:300px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+border:none;
+cursor:pointer;
+transition:0.3s;
+text-align:center;
+}
+
+.org-btn h3{
+font-family:'Orbitron';
+letter-spacing:3px;
+margin-bottom:10px;
+}
+
+.org-btn p{
+font-family:'Montserrat';
+line-height:1.6;
+color:#444;
+}
+
+/* HOVER EFFECT */
+
+.org-btn:hover{
+transform:translateY(-8px) scale(1.03);
+background:black;
+color:white;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.org-btn:hover p{
+color:#ddd;
+}
+
+/* CLICK EFFECT */
+
+.org-btn:active{
+transform:scale(0.95);
+}
+
+
+/* FOOTER */
+
+.mini-footer{
+background:#2b2b2b;
+height:40px;
+width:100%;
+}
+
+/* HEADER FLEX */
+
+.org-header{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+}
+
+/* ICON BUTTON */
+
+.org-icon-btn{
+width:40px;
+height:40px;
+border-radius:50%;
+border:none;
+background:black;
+color:white;
+font-size:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.org-icon-btn:hover{
+background:red;
+transform:scale(1.2) rotate(180deg);
+}
+
+/* MODAL BACKGROUND */
+
+.org-modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
+
+/* MODAL BOX */
+
+.org-modal-box{
+background:white;
+padding:30px;
+border-radius:12px;
+width:400px;
+text-align:center;
+position:relative;
+animation:pop 0.4s ease;
+}
+
+/* CLOSE BUTTON */
+
+.org-close{
+position:absolute;
+right:15px;
+top:10px;
+font-size:25px;
+cursor:pointer;
+}
+
+/* ANIMATION */
+
+@keyframes pop{
+from{
+transform:scale(0.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+/* AD MODAL BACKGROUND */
+
+.ad-modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.75);
+justify-content:center;
+align-items:center;
+z-index:3000;
+}
+
+/* AD BOX */
+
+.ad-box{
+background:white;
+padding:30px;
+border-radius:12px;
+width:350px;
+text-align:center;
+position:relative;
+animation:adPop 0.5s ease;
+}
+
+/* CLOSE BUTTON */
+
+.ad-close{
+position:absolute;
+top:10px;
+right:15px;
+font-size:24px;
+cursor:pointer;
+}
+
+/* BUTTON */
+
+.ad-btn{
+margin-top:20px;
+padding:10px 20px;
+border:none;
+background:black;
+color:white;
+cursor:pointer;
+border-radius:6px;
+transition:0.3s;
+}
+
+.ad-btn:hover{
+background:red;
+}
+
+/* POPUP ANIMATION */
+
+@keyframes adPop{
+from{
+transform:scale(0.6);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div id="loader">
+
+<div class="loader-text">OLUMPAS</div>
+
+<div class="load-bar">
+<div class="load-move"></div>
+</div>
+
+</div>
+
+<!-- HEADER -->
+
+<div class="red-header">
+
+<img src="image.jpg" class="header-logo">
+<div class="logo-text">OLUMPAS</div>
+
+</div>
+
+<div class="black-header">
+<div class="scroll-text">
+ORGANIZATION • LAB • UNDERGROUND • MANAGEMENT • PRIME • ASSASSIN • SHADOW
+</div>
+</div>
+
+<!-- TITLE -->
+
+<div class="content">
+
+<div class="middle-title">OLUMPAS</div>
+
+<div class="flow-line">
+<div class="line"></div>
+</div>
+
+</div>
+
+<!-- BLACK SECTION 1 -->
+
+<div class="black-section first-black">
+
+<div class="footer-item">
+<img src="image.jpg" class="footer-logo">
+<div class="footer-text">OLUMPAS GROUP</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="footer-item">
+<img src="1.jpg" class="footer-logo">
+<div class="footer-text">PRIME EMPIRE</div>
+</div>
+
+</div>
+
+<!-- BLACK SECTION 2 -->
+
+<div class="black-section">
+
+<div class="footer-item">
+<img src="image.jpg" class="footer-logo">
+<div class="footer-text">OLUMPAS GROUP</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="footer-item">
+<img src=" .jpg" class="footer-logo">
+<div class="footer-text">SAREGENT</div>
+</div>
+
+</div>
+
+<!-- BLACK SECTION 3 -->
+
+<div class="black-section">
+
+<div class="footer-item">
+<img src="image.jpg" class="footer-logo">
+<div class="footer-text">OLUMPAS GROUP</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="footer-item">
+<img src=" 3.jpg" class="footer-logo">
+<div class="footer-text">MACHMETSTI</div>
+</div>
+
+</div>
+
+<!-- ABOUT -->
+
+<div class="text-section">
+
+<div class="text-title">
+ABOUT OLUMPAS
+</div>
+
+<div class="text-para">
+OLUMPAS is a powerful underground organization built on strategy,
+loyalty and intelligence. Our mission is to create a strong network
+of innovators, leaders and thinkers who work together to shape the
+future.
+
+This platform represents unity, strength and vision where every
+member contributes to building a powerful empire.
+</div>
+
+</div>
+
+<!-- TEXT SLIDER -->
+
+<div class="text-slider"> 
+
+    <div class="text-slides"> 
+
+        <div class="text-box"> 
+            <h2>PRIME EMPIRE</h2> 
+            <p>Leaders and innovators building the future together.</p> 
+        </div> 
+
+        <div class="text-box"> 
+            <h2>SAREGENT</h2> 
+            <p>Operating silently where real power is created.</p> 
+        </div> 
+
+        <div class="text-box"> 
+            <h2>MACHMETSTI</h2> 
+            <p>Future In Robots Technology Hands</p> 
+        </div>
+    </div> 
+</div>
+<!-- SLIDESHOW -->
+
+<div class="slider">
+
+<div class="slides">
+   
+<img src="s1.png">
+<img src="s2.png">
+<img src="s3.png">
+
+</div>
+
+</div>
+
+<!-- ORGANIZATION PARAGRAPH SECTION -->
+
+<div class="org-section">
+
+<div class="org-header">
+
+<div class="org-title">OLUMPAS</div>
+
+<button class="org-icon-btn" onclick="openModal()">!</button>
+
+</div>
+
+<div class="org-line"></div>
+
+<div class="org-row">
+
+<a href="prime.html"><button class="org-btn">
+<h3>PRIME</h3>
+<p>Leader of strategy and control.</p>
+</button></a>
+
+<a href="saregent.html"><button class="org-btn">
+<h3>SEREGENT</h3>
+<p>Execution unit working in shadows.</p>
+</button></a>
+
+<a href=".html"><button class="org-btn">
+<h3>MACHMETSTI</h3>
+<p>Future In Robots Technology Hand.</p>
+</button></a>
+
+</div>
+
+</div>
+
+<div class="mini-footer"></div>
+
+<!-- MODAL -->
+
+<div id="orgModal" class="org-modal">
+
+<div class="org-modal-box">
+
+<span class="org-close" onclick="closeModal()">×</span>
+
+<h2>OLUMPAS SYSTEM</h2>
+
+<p>
+**“Three companies operate under the Olumpas Group:
+
+1.Prime
+2.Seregent
+3.Machmetsti
+
+To learn more about them, click on the company names and get detailed information.”**⚡
+</p>
+
+</div>
+
+</div>
+
+<!-- AUTO AD MODAL -->
+
+<div id="adModal" class="ad-modal">
+
+<div class="ad-box">
+
+<span class="ad-close" onclick="closeAd()">×</span>
+
+<h2>🔥 SPECIAL NOTICE</h2>
+
+<p>
+Welcome to OLUMPAS ⚡  
+In The Site You could Better Experience, Get Sign Up Now
+</p>
+
+<a href="signup.html"><button class="ad-btn">Sign Up</button></a>
+
+</div>
+
+</div>
+
+<script>
+
+setTimeout(function(){
+
+let loader = document.getElementById("loader");
+
+loader.style.opacity="0";
+
+setTimeout(function(){
+loader.style.display="none";
+},1000);
+
+},3000);
+
+function openModal(){
+document.getElementById("orgModal").style.display="flex";
+}
+
+function closeModal(){
+document.getElementById("orgModal").style.display="none";
+}
+
+// AUTO SHOW AFTER 10 SEC
+
+setTimeout(function(){
+document.getElementById("adModal").style.display="flex";
+},10000);
+
+// CLOSE FUNCTION
+
+function closeAd(){
+document.getElementById("adModal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>

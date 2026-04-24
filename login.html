@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OPS Register</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#000;
+color:white;
+text-align:center;
+margin:0;
+padding:0;
+}
+
+/* HEADER */
+
+.header{
+background:#c1121f;
+padding:15px;
+font-size:22px;
+font-weight:bold;
+letter-spacing:2px;
+box-shadow:0 3px 10px rgba(0,0,0,0.6);
+}
+
+/* FORM TITLE */
+
+h2{
+margin-top:30px;
+}
+
+/* FORM */
+
+form{
+background:#111;
+padding:25px;
+width:320px;
+margin:auto;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 0 15px rgba(0,0,0,0.8);
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin:6px 0;
+border:none;
+border-radius:5px;
+background:#222;
+color:white;
+}
+
+input::placeholder{
+color:#aaa;
+}
+
+/* BUTTON */
+
+button{
+padding:10px;
+width:100%;
+background:#c1121f;
+border:none;
+color:white;
+border-radius:5px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#a10f19;
+}
+
+.captcha{
+background:#000;
+border:1px solid #444;
+padding:10px;
+margin:8px 0;
+font-size:22px;
+letter-spacing:3px;
+}
+
+/* FOOTER */
+
+.footer{
+background:#444;
+color:white;
+padding:10px;
+margin-top:40px;
+font-size:14px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="header">
+OPS COIN MINING
+</div>
+
+<h2>Register Account</h2>
+
+<form id="form">
+
+<input id="name" placeholder="Full Name" required>
+
+<input id="mobile" placeholder="Mobile">
+
+<input id="email" placeholder="Email">
+
+<input id="city" placeholder="City">
+
+<input id="state" placeholder="State">
+
+<input id="country" placeholder="Country">
+
+<input type="date" id="dob">
+
+<select id="gender">
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<div class="captcha" id="captcha"></div>
+
+<input id="captchaInput" placeholder="Enter Captcha">
+
+<button type="submit">Register</button>
+
+</form>
+
+<div class="footer">
+OPS Coin Mining Platform © 2026
+</div>
+
+<script>
+
+function genCaptcha(){
+let chars="ABCDEFGHJKLMNP23456789";
+let c="";
+for(let i=0;i<5;i++){
+c+=chars[Math.floor(Math.random()*chars.length)];
+}
+return c;
+}
+
+let captcha=genCaptcha();
+document.getElementById("captcha").innerText=captcha;
+
+function genOPS(){
+let letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+return "OPS"+
+Math.floor(Math.random()*90+10)+
+letters[Math.floor(Math.random()*26)]+
+letters[Math.floor(Math.random()*26)]+
+Math.floor(Math.random()*900+100);
+}
+
+form.onsubmit=function(e){
+
+e.preventDefault();
+
+if(captchaInput.value!=captcha){
+alert("Captcha wrong");
+return;
+}
+
+let users=JSON.parse(localStorage.getItem("ops_users"))||[];
+
+let code=genOPS();
+
+let user={
+name:name.value,
+mobile:mobile.value,
+email:email.value,
+city:city.value,
+state:state.value,
+country:country.value,
+dob:dob.value,
+gender:gender.value,
+ops_code:code,
+coins:0,
+wallet:0,
+history:[],
+mining_start:null
+};
+
+users.push(user);
+
+localStorage.setItem("ops_users",JSON.stringify(users));
+localStorage.setItem("current_user",code);
+
+alert("OPS Code: "+code);
+
+window.location="mining.html";
+
+}
+
+</script>
+
+</body>
+</html>

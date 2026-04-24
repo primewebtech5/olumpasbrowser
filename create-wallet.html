@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Wallet</title>
+
+<style>
+body{background:#0f172a;color:white;text-align:center;font-family:Arial;padding:40px}
+input{padding:8px;margin:5px}
+button{padding:10px;background:#22c55e;border:none;color:white}
+</style>
+
+</head>
+<body>
+
+<h2>Create OPS Wallet</h2>
+
+<input id="ops" placeholder="Enter OPS Code">
+<input id="username" placeholder="Username">
+
+<button onclick="createWallet()">Create Wallet</button>
+
+<script>
+
+function createWallet(){
+
+let wallet={
+ops:ops.value,
+username:username.value,
+balance:0,
+history:[]
+}
+
+localStorage.setItem("wallet",JSON.stringify(wallet));
+
+alert("Wallet Created");
+
+window.location="wallet.html";
+
+}
+
+</script>
+
+</body>
+</html>

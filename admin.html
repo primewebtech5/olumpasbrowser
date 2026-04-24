@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+}
+
+/* LOGIN */
+#loginPage{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+h2::after{
+    content:"";
+    display:block;
+    width:60px;
+    height:3px;
+    background:red;
+    margin:8px auto;
+}
+
+.input-box input{
+    width:250px;
+    padding:10px;
+    margin:10px;
+    border:none;
+    border-bottom:2px solid #ccc;
+}
+
+.login-btn{
+    width:250px;
+    padding:10px;
+    background:red;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+/* DASHBOARD */
+#dashboard{
+    display:none;
+}
+
+.header{
+    background:black;
+    padding:10px;
+    text-align:center;
+}
+
+.menu-btn{
+    background:#eee;
+    border:2px solid black;
+    padding:10px 15px;
+    margin:5px;
+    cursor:pointer;
+}
+
+.menu-btn:hover{
+    background:red;
+    color:white;
+}
+
+.active{
+    background:red;
+    color:white;
+}
+
+.content{
+    padding:30px;
+    text-align:center;
+}
+
+.section{
+    display:none;
+}
+
+/* LETTERPAD FORM */
+.container{
+    background:white;
+    width:400px;
+    margin:20px auto;
+    padding:20px;
+    border-left:8px solid red;
+    border-right:8px solid red;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input, textarea{
+    width:90%;
+    padding:10px;
+    margin:8px;
+}
+
+button{
+    padding:10px 20px;
+    background:red;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="login-btn" onclick="login()">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+    <div class="header">
+        <button class="menu-btn active" onclick="showPage('home', this)">Home</button>
+        <button class="menu-btn" onclick="showPage('users', this)">Users</button>
+        <button class="menu-btn" onclick="showPage('letter', this)">Letterpad</button>
+        <button class="menu-btn" onclick="showPage('settings', this)">Settings</button>
+        <button class="menu-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="content">
+
+        <!-- HOME -->
+        <div id="home" class="section" style="display:block;">
+            <h2>Home 🏠</h2>
+            <p>Welcome Bhai 🔥</p>
+        </div>
+
+        <!-- USERS -->
+        <div id="users" class="section">
+            <h2>Users 👥</h2>
+        </div>
+
+        <!-- LETTERPAD -->
+        <div id="letter" class="section">
+
+            <div class="container">
+                <h2>Letterpad Generator</h2>
+
+                <input type="text" id="from" placeholder="From Name">
+                <input type="text" id="to" placeholder="To Name">
+                <input type="text" id="subject" placeholder="Subject">
+                <textarea id="details" placeholder="Enter Details"></textarea>
+                <input type="text" id="sender" placeholder="Sender Name">
+
+                <button onclick="generatePDF()">Generate PDF</button>
+            </div>
+
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="settings" class="section">
+            <h2>Settings ⚙️</h2>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+// LOGIN DATA
+let userData = {
+    username: "olumpassmp",
+    password: "ops666"
+};
+
+function login(){
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === userData.username && pass === userData.password){
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    }else{
+        alert("Wrong Username or Password ❌");
+    }
+}
+
+function logout(){
+    document.getElementById("loginPage").style.display = "flex";
+    document.getElementById("dashboard").style.display = "none";
+}
+
+function showPage(pageId, btn){
+    let sections = document.querySelectorAll(".section");
+    sections.forEach(sec => sec.style.display = "none");
+
+    document.getElementById(pageId).style.display = "block";
+
+    let buttons = document.querySelectorAll(".menu-btn");
+    buttons.forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+}
+
+// PDF FUNCTION
+function generatePDF(){
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:'mm', format:'a4'});
+
+    const pageWidth = 210;
+    const pageHeight = 297;
+
+    let from = document.getElementById("from").value;
+    let to = document.getElementById("to").value;
+    let subject = document.getElementById("subject").value;
+    let details = document.getElementById("details").value;
+    let sender = document.getElementById("sender").value;
+
+    // HEADER
+    doc.setFillColor(200,0,0);
+    doc.rect(0,0,pageWidth,25,'F');
+
+    // SIDE LINES
+    doc.setDrawColor(200,0,0);
+    doc.setLineWidth(3);
+    doc.line(15,0,15,pageHeight);
+    doc.line(pageWidth-15,0,pageWidth-15,pageHeight);
+
+    // TITLE
+    doc.setTextColor(255,255,255);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.text("OLUMPAS", pageWidth-20,15,{align:"right"});
+
+    doc.setTextColor(0,0,0);
+
+    // FOOTER
+    doc.setFillColor(30,30,30);
+    doc.rect(0,pageHeight-17,pageWidth,17,'F');
+
+    let marginLeft = 20;
+    let marginRight = pageWidth-20;
+
+    doc.text(from, marginRight, 40, {align:"right"});
+    doc.text(to, marginLeft, 55);
+    doc.text(subject, pageWidth/2, 75, {align:"center"});
+
+    let splitText = doc.splitTextToSize(details, pageWidth-40);
+    doc.text(splitText, marginLeft, 95);
+
+    doc.text(sender, marginRight, pageHeight-30, {align:"right"});
+
+    doc.save("Letterpad.pdf");
+}
+
+</script>
+
+</body>
+</html>

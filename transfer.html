@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OPS Transfer</title>
+
+<style>
+body{background:#0f172a;color:white;text-align:center;font-family:Arial}
+
+input{padding:8px;margin:5px}
+
+button{padding:10px;background:#22c55e;border:none;color:white}
+
+</style>
+
+</head>
+<body>
+
+<h2>Transfer OPS Coin</h2>
+
+<input id="receiver" placeholder="Receiver OPS Code">
+<input id="amount" type="number" placeholder="Amount">
+
+<br>
+
+<button onclick="transfer()">Send</button>
+
+<script>
+
+let users=JSON.parse(localStorage.getItem("ops_users"));
+let code=localStorage.getItem("current_user");
+
+let sender=users.find(u=>u.ops_code==code);
+
+function transfer(){
+
+let r=users.find(u=>u.ops_code==receiver.value);
+
+let amt=Number(amount.value);
+
+if(!r){
+alert("Receiver not found");
+return;
+}
+
+if(sender.wallet<amt){
+alert("Not enough balance");
+return;
+}
+
+sender.wallet-=amt;
+r.wallet+=amt;
+
+sender.history.push("Sent "+amt+" to "+r.ops_code);
+r.history.push("Received "+amt+" from "+sender.ops_code);
+
+localStorage.setItem("ops_users",JSON.stringify(users));
+
+alert("Transfer success");
+
+}
+
+</script>
+
+</body>
+</html>

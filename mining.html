@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OPS Mining</title>
+
+<style>
+body{background:#0f172a;color:white;font-family:Arial;text-align:center}
+
+.user{
+position:absolute;
+left:20px;
+top:20px;
+background:#111;
+padding:15px;
+border-radius:10px;
+text-align:left
+}
+
+.coin{font-size:50px;color:#22c55e}
+
+.progressBox{
+width:300px;
+height:20px;
+background:#333;
+margin:auto;
+border-radius:10px;
+overflow:hidden
+}
+
+#progressBar{
+height:100%;
+width:0%;
+background:#22c55e
+}
+
+button{padding:10px;margin:5px;background:#22c55e;border:none;color:white}
+
+</style>
+
+</head>
+<body>
+
+<div class="user">
+<div id="u_name"></div>
+<div id="u_code"></div>
+<div id="u_country"></div>
+</div>
+
+<h1>OPS COIN MINING</h1>
+
+<div class="coin" id="coin">0</div>
+
+<div class="progressBox">
+<div id="progressBar"></div>
+</div>
+
+<br>
+
+<button onclick="startMining()">Start Mining</button>
+<button onclick="addWallet()">Add To Wallet</button>
+<button onclick="goWallet()">Wallet</button>
+
+<script>
+
+let users=JSON.parse(localStorage.getItem("ops_users"));
+let code=localStorage.getItem("current_user");
+
+let user=users.find(u=>u.ops_code==code);
+
+u_name.innerText="Name: "+user.name;
+u_code.innerText="OPS Code: "+user.ops_code;
+u_country.innerText="Country: "+user.country;
+
+coin.innerText=user.coins;
+
+let miningTime=60000;
+
+function startMining(){
+
+if(user.mining_start){
+alert("Mining already running");
+return;
+}
+
+user.mining_start=Date.now();
+
+localStorage.setItem("ops_users",JSON.stringify(users));
+
+}
+
+function updateProgress(){
+
+if(!user.mining_start)return;
+
+let now=Date.now();
+
+let percent=((now-user.mining_start)/miningTime)*100;
+
+if(percent>=100){
+
+user.coins+=1;
+user.mining_start=null;
+
+localStorage.setItem("ops_users",JSON.stringify(users));
+
+coin.innerText=user.coins;
+
+alert("1 OPS mined");
+
+percent=0;
+}
+
+progressBar.style.width=percent+"%";
+
+}
+
+setInterval(updateProgress,1000);
+
+function addWallet(){
+
+if(user.coins<=0){
+alert("No coins");
+return;
+}
+
+user.wallet+=user.coins;
+
+user.history.push("Mining +"+user.coins);
+
+user.coins=0;
+
+localStorage.setItem("ops_users",JSON.stringify(users));
+
+coin.innerText=0;
+
+}
+
+function goWallet(){
+window.location="wallet.html";
+}
+
+</script>
+
+</body>
+</html>

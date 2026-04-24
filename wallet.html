@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OPS Wallet</title>
+
+<style>
+body{background:#0f172a;color:white;text-align:center;font-family:Arial}
+
+.balance{font-size:40px;color:#22c55e}
+
+.history{
+background:#111;
+margin:20px;
+padding:10px;
+border-radius:10px
+}
+
+button{padding:10px;margin:5px;background:#22c55e;border:none;color:white}
+
+</style>
+
+</head>
+<body>
+
+<h1>OPS WALLET</h1>
+
+<div class="balance" id="balance"></div>
+
+<button onclick="goMining()">Mining</button>
+<button onclick="goTransfer()">Transfer</button>
+
+<div class="history" id="history"></div>
+
+<script>
+
+let users=JSON.parse(localStorage.getItem("ops_users"));
+let code=localStorage.getItem("current_user");
+
+let user=users.find(u=>u.ops_code==code);
+
+balance.innerText=user.wallet+" OPS";
+
+let h="";
+
+user.history.forEach(t=>{
+h+="<div>"+t+"</div>";
+});
+
+history.innerHTML=h;
+
+function goMining(){
+window.location="mining.html";
+}
+
+function goTransfer(){
+window.location="transfer.html";
+}
+
+</script>
+
+</body>
+</html>
