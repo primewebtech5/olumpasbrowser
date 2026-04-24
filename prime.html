@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Prime EMPIRE</title>
+
+<!-- 🔥 Premium Font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* 🔥 Bottom Lighting */
+body::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:40%;
+    background: radial-gradient(
+        ellipse at bottom,
+        rgba(255,255,255,0.25) 0%,
+        rgba(255,255,255,0.1) 40%,
+        transparent 80%
+    );
+    pointer-events:none;
+}
+
+/* Box */
+.subtitle-box{
+    width:90%;
+    max-width:700px;
+    background:black;
+    padding:20px;
+    text-align:center;
+    border-radius:10px;
+    position:relative;
+    z-index:2;
+}
+
+/* Text */
+#subtitle{
+    color:white;
+    font-size:clamp(18px, 5vw, 30px);
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-family: 'Orbitron', sans-serif;
+
+    border-right:3px solid white;
+    display:inline-block;
+    padding-right:5px;
+
+    animation: blink 0.8s infinite;
+    word-wrap: break-word;
+}
+
+/* Cursor */
+@keyframes blink{
+    0%{border-color:white;}
+    50%{border-color:transparent;}
+    100%{border-color:white;}
+}
+
+/* Fade */
+.fade-out{
+    opacity:0;
+    transition:0.5s;
+}
+
+/* Button */
+#nextBtn{
+    display:none;
+    margin-top:25px;
+    padding:12px 25px;
+    font-size:16px;
+    background:white;
+    color:black;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    width:100%;
+    max-width:250px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Hover effect */
+#nextBtn:hover{
+    background:#ddd;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="subtitle-box">
+    <div id="subtitle"></div>
+    <br>
+    <button id="nextBtn" onclick="goHome()">Back To Homepage</button>
+</div>
+
+<script>
+
+let texts = [
+    "WELCOME",
+    "THIS IS STORY OF PRIME EMPIRE",
+    "PRIME GROUP IS WORKING UNDER OLUMPAS GROUP",
+    "WE BUILD FUTURE TECHNOLOGY",
+    "JOIN THE PRIME EMPIRE"
+];
+
+let index = 0;
+let charIndex = 0;
+let speed = 70;
+
+function typeText(){
+    if(charIndex < texts[index].length){
+        document.getElementById("subtitle").innerHTML += texts[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeText, speed);
+    }else{
+        setTimeout(eraseText, 2000);
+    }
+}
+
+function eraseText(){
+    let el = document.getElementById("subtitle");
+    el.classList.add("fade-out");
+
+    setTimeout(() => {
+        el.innerHTML = "";
+        el.classList.remove("fade-out");
+
+        index++;
+
+        if(index >= texts.length){
+            document.getElementById("subtitle").style.display = "none";
+            document.getElementById("nextBtn").style.display = "block";
+            return;
+        }
+
+        charIndex = 0;
+        typeText();
+
+    }, 500);
+}
+
+function goHome(){
+    window.location.href = "index.html";
+}
+
+typeText();
+
+</script>
+
+</body>
+</html>
